@@ -73,7 +73,6 @@ app.get("/users", function(req,res){
     })
 });
 
-
 app.post("/users", function(req,res){
     var district = req.body.district;
 
@@ -90,7 +89,6 @@ app.post("/login", function(req,res){
     res.send(true);
   }
   else res.send(false);
-
 });
 
 
