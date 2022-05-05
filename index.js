@@ -4,11 +4,15 @@ const mongoose = require('mongoose');
 const app = express();
 const dotenv = require("dotenv");
 const cors = require("cors");
+const bodyParser = require("body-parser");
 
 app.listen(process.env.PORT || 2000, function() {
   console.log("Server started on port 2000");
 });
-
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(bodyParser.json())
 app.use(cors());
 
     // Handaling cors reror
