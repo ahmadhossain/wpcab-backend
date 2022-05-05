@@ -9,7 +9,7 @@ app.listen(process.env.PORT || 2000, function() {
 });
 // mongodb://localhost:27017/wpcab_DB
 dotenv.config();
-mongoose.connect(process.env.MONGO_URL);
+mongoose.connect("mongodb+srv://admin-ahmad:w2NtxE9-4uKc7Sp@wpcabdb.5p8qi.mongodb.net/wpcab_DB?retryWrites=true&w=majority");
 
 const UserSchema = new mongoose.Schema({
     _id : String,
