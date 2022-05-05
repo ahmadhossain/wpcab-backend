@@ -7,6 +7,16 @@ const dotenv = require("dotenv");
 app.listen(process.env.PORT || 2000, function() {
   console.log("Server started on port 2000");
 });
+
+app.use(cors());
+
+    // Handaling cors reror
+    app.use(function(req, res, next) {
+      res.header("Access-Control-Allow-Origin", "*");
+      res.header("Access-Control-Allow-Headers", "X-Requested-With");
+      next();
+      });
+    
 // mongodb://localhost:27017/wpcab_DB
 // dotenv.config();
 mongoose.connect("mongodb+srv://admin-ahmad:w2NtxE9-4uKc7Sp@wpcabdb.5p8qi.mongodb.net/wpcab_DB?retryWrites=true&w=majority");
