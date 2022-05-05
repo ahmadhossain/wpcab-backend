@@ -3,7 +3,8 @@ const express = require("express");
 const mongoose = require('mongoose');
 const app = express();
 const dotenv = require("dotenv");
-  
+const cors = require("cors");
+
 app.listen(process.env.PORT || 2000, function() {
   console.log("Server started on port 2000");
 });
