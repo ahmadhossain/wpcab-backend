@@ -15,12 +15,12 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json())
 app.use(cors());
 
-    // Handaling cors reror
-    app.use(function(req, res, next) {
-      res.header("Access-Control-Allow-Origin", "*");
-      res.header("Access-Control-Allow-Headers", "X-Requested-With");
-      next();
-      });
+// Handaling cors reror
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+  });
     
 // mongodb://localhost:27017/wpcab_DB
 // dotenv.config();
@@ -106,5 +106,31 @@ app.post("/login", function(req,res){
   else res.send(false);
 });
 
-
-
+app.post("/register", function(req,res){
+  const d = new Date();
+  const member = new Member({
+    FullName : req.body.FullName,
+    Gender : req.body.Gender,
+    FatherName : req.body.FatherName,
+    HusbandName : req.body.HusbandName,
+    MaritalStatus : req.body.MaritalStatus,
+    Inviter : req.body.Inviter,
+    BloodGroup : req.body.BloodGroup,
+    Occupation : req.body.Occupation,
+    PermanentAddressVillage : req.body.PermanentAddressVillage,
+    PermanentAddressSubdistrict : req.body.PermanentAddressSubdistrict,
+    PermanentAddressDristrict : req.body.PermanentAddressDristrict,
+    PermanentAddressPostOffice : req.body.PermanentAddressPostOffice,
+    PermanentAddressCountry : req.body.PermanentAddressCountry,
+    PresentAddress : req.body.PresentAddress,
+    Nationality : req.body.Nationality,
+    NID : req.body.NID,
+    UserName : req.body.UserName,
+    Password : req.body.Password,
+    Phone : req.body.Phone,
+    Email : req.body.Email,
+    Role : req.body.Role,
+    Date : d.toDateString()
+  });
+  member.save();
+});
