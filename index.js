@@ -26,8 +26,8 @@ app.use(function(req, res, next) {
 // dotenv.config();
 mongoose.connect("mongodb+srv://admin-ahmad:w2NtxE9-4uKc7Sp@wpcabdb.5p8qi.mongodb.net/wpcab_DB?retryWrites=true&w=majority");
 
-const UserSchema = new mongoose.Schema({
-    _id : String,
+const MemberSchema = new mongoose.Schema(
+  {
     FullName : String,
     Gender : String,
     FatherName : String,
@@ -39,51 +39,31 @@ const UserSchema = new mongoose.Schema({
     Inviter : String,
     BloodGroup : String,
     Occupation : String,
-    PermanentAddress : String,
     PermanentAddressVillage : String,
-    PermanentAddressHouse : String,
-    PermanentAddressRoad : String,
-    PermanentAddressSector : String,
-    PermanentAddressBlock : String,
     PermanentAddressSubdistrict : String,
     PermanentAddressDristrict : String,
     PermanentAddressPostOffice : String,
-    PermanentAddressPostalCode : String,
     PermanentAddressCountry : String,
-    PermanentAddressNationality : String,
     PermanentAddressNID : String,
-    PresentAddressVillage : String,
-    PresentAddressHouse : String,
-    PresentAddressRoad : String,
-    PresentAddressSector : String,
-    PresentAddressBlock : String,
-    PresentAddressSubDistrict : String,
-    PresentAddressDistrict : String,
-    PresentAddressPostOffice : String,
-    PresentAddressPostalCode : String,
-    PresentAddressCountry : String,
-    PresentAddressZone : String,
-    Zone : String,
-    SubDistrict : String,
-    District : String,
-    Country : String,
+    PresentAddress : String,
     Nationality : String,
-    NID : String,
     UserName : String,
     Password : String,
     Phone : String,
     Email : String,
-    Role : String
-});
+    Role : String 
+  },
+  {timestamps:true}
+);
 
-const User = new mongoose.model("Member", UserSchema);
+const Member = new mongoose.model("Member", MemberSchema);
 
 app.get("/", function(req,res){
     res.send("<h1>Welcome to WPCAB server!</h1>");
 })
 
 app.get("/users", function(req,res){
-    User.find({ PermanentAddressDristrict: "ঢাকা" },function(err,found){
+    Member.find({ PermanentAddressDristrict: "ঢাকা" },function(err,found){
       res.send(found);
     })
 });
@@ -91,7 +71,7 @@ app.get("/users", function(req,res){
 app.post("/users", function(req,res){
     var district = req.body.district;
 
-    User.find({PermanentAddressDristrict: district},function(err,found){
+    Member.find({PermanentAddressDristrict: district},function(err,found){
           res.send(found);
     })
 });
@@ -108,29 +88,13 @@ app.post("/login", function(req,res){
 
 app.post("/register", function(req,res){
   const d = new Date();
-  const member = new Member({
-    FullName : req.body.FullName,
-    Gender : req.body.Gender,
-    FatherName : req.body.FatherName,
-    HusbandName : req.body.HusbandName,
-    MaritalStatus : req.body.MaritalStatus,
-    Inviter : req.body.Inviter,
-    BloodGroup : req.body.BloodGroup,
-    Occupation : req.body.Occupation,
-    PermanentAddressVillage : req.body.PermanentAddressVillage,
-    PermanentAddressSubdistrict : req.body.PermanentAddressSubdistrict,
-    PermanentAddressDristrict : req.body.PermanentAddressDristrict,
-    PermanentAddressPostOffice : req.body.PermanentAddressPostOffice,
-    PermanentAddressCountry : req.body.PermanentAddressCountry,
-    PresentAddress : req.body.PresentAddress,
-    Nationality : req.body.Nationality,
-    NID : req.body.NID,
-    UserName : req.body.UserName,
-    Password : req.body.Password,
-    Phone : req.body.Phone,
-    Email : req.body.Email,
-    Role : req.body.Role,
-    Date : d.toDateString()
+  const member = new Member(req.body);
+  // console.log(member);
+  member.save()
+  .then(data => {
+    res.send(true);
+  })
+  .catch(err => {
+    res.send(false);
   });
-  member.save();
 });
